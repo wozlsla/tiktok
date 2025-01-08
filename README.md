@@ -11,3 +11,8 @@ A new Flutter project.
 
 - Flutter, Dart
 - Firebase
+
+### Reference
+
+- Sizing table : [Tailwind CSS](https://tailwindcss.com/) (lib/constants/sizes.dart)
+- UI/UX pattern reference tool : [Mobbin](https://mobbin.com/)
