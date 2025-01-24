@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
-import 'package:tiktok/features/authentication/sign_up_screen.dart';
 import 'package:tiktok/features/widgets/auth_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  void onSignUpTap(BuildContext context) {
-    Navigator.of(context).pop;
+  void _onSignUpTap(BuildContext context) {
+    Navigator.of(context).pop();
   }
 
   @override
@@ -56,7 +55,7 @@ class LoginScreen extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         height: 60,
         elevation: 2,
-        color: Colors.grey.shade100, // bar 내부
+        color: Colors.grey.shade50, // bar 내부
         // surfaceTintColor: Colors.grey, // over bar ??
         // color: Colors.transparent, // shadow - elevation 보기 쉬움
         shadowColor: Colors.black,
@@ -66,7 +65,7 @@ class LoginScreen extends StatelessWidget {
             Text("Don't have an account?"),
             Gaps.h5,
             GestureDetector(
-              onTap: () => onSignUpTap(context),
+              onTap: () => _onSignUpTap(context),
               child: Text(
                 "Sign up",
                 style: TextStyle(
