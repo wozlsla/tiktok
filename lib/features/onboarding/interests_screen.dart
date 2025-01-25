@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/onboarding/interest_button.dart';
+import 'package:tiktok/features/onboarding/tutorial_screen.dart';
 
 const interests = [
   "Daily Life",
@@ -66,6 +67,12 @@ class _InterestsScreenState extends State<InterestsScreen> {
         _showTitle = false;
       });
     }
+  }
+
+  void _onNextTap() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => TutorialScreen(),
+    ));
   }
 
   @override
@@ -133,27 +140,30 @@ class _InterestsScreenState extends State<InterestsScreen> {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 1,
-        child: Padding(
-          padding: EdgeInsets.only(
-            bottom: Sizes.size40,
-            top: Sizes.size16,
-            left: Sizes.size24,
-            right: Sizes.size24,
-          ),
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: Sizes.size16 + Sizes.size2,
+        child: GestureDetector(
+          onTap: _onNextTap,
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: Sizes.size40,
+              top: Sizes.size16,
+              left: Sizes.size24,
+              right: Sizes.size24,
             ),
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-            ),
-            child: Text(
-              "Next",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: Sizes.size16,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: Sizes.size16 + Sizes.size2,
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+              ),
+              child: Text(
+                "Next",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: Sizes.size16,
+                ),
               ),
             ),
           ),
