@@ -17,22 +17,13 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  final screens = [
-    const Center(
-      child: Text("home"),
-    ),
-    const Center(
-      child: Text("search"),
-    )
-  ];
-
   void _onTap(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
-  void _onPostVideoBottonTap() {
+  void onPostVideoBottonTap() {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Scaffold(
@@ -91,8 +82,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               ),
               Gaps.h24,
               GestureDetector(
-                onTap: _onPostVideoBottonTap,
-                child: PostVideoButton(),
+                child: PostVideoButton(onTap: onPostVideoBottonTap),
               ),
               Gaps.h24,
               NavTab(
