@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
-import 'package:tiktok/features/onboarding/interest_button.dart';
+import 'package:tiktok/features/onboarding/widgets/interest_button.dart';
 import 'package:tiktok/features/onboarding/tutorial_screen.dart';
 
 const interests = [
