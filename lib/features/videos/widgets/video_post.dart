@@ -42,6 +42,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
+    await _videoPlayerController.setLooping(true);
 
     setState(() {});
     _videoPlayerController.addListener(_onVideoChange); // 영상 끝 감지
@@ -62,7 +63,7 @@ class _VideoPostState extends State<VideoPost>
 
     _animationController.addListener(() {
       // print(_animationController.value);
-      setState(() {}); // value 가 변하는 모든 순간을 build method가 capture 가능하도록
+      // setState(() {}); // value 가 변하는 모든 순간을 build method가 capture 가능하도록
     });
   }
 
@@ -115,8 +116,14 @@ class _VideoPostState extends State<VideoPost>
           Positioned.fill(
             child: IgnorePointer(
               child: Center(
-                child: Transform.scale(
-                  scale: _animationController.value,
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _animationController.value,
+                      child: child,
+                    );
+                  },
                   child: AnimatedOpacity(
                     opacity: _isPaused ? 1 : 0,
                     duration: _animationDuration,
