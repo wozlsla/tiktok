@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-
-import '../../../constants/gaps.dart';
-import '../../../constants/sizes.dart';
-import 'video_button.dart';
+import 'package:tiktok/constants/gaps.dart';
+import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/features/videos/widgets/video_button.dart';
+import 'package:tiktok/features/videos/widgets/video_comments.dart';
 
 class VideoPost extends StatefulWidget {
   final Function onVideoFinished;
@@ -98,6 +98,21 @@ class _VideoPostState extends State<VideoPost>
     });
   }
 
+  void _onCommentsTap(BuildContext context) async {
+    if (_videoPlayerController.value.isPlaying) {
+      _onTogglePause();
+    }
+
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // bottom sheet의 사이즈 변경 가능
+      backgroundColor: Colors.transparent,
+      builder: (context) => VideoComments(),
+    );
+
+    _onTogglePause();
+  }
+
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -170,7 +185,7 @@ class _VideoPostState extends State<VideoPost>
             bottom: 25,
             right: 15,
             child: Column(
-              children: const [
+              children: [
                 CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
@@ -186,9 +201,12 @@ class _VideoPostState extends State<VideoPost>
                   text: "2.9M",
                 ),
                 Gaps.v24,
-                VideoButton(
-                  icon: FontAwesomeIcons.solidComment,
-                  text: "33K",
+                GestureDetector(
+                  onTap: () => _onCommentsTap(context),
+                  child: VideoButton(
+                    icon: FontAwesomeIcons.solidComment,
+                    text: "33K",
+                  ),
                 ),
                 Gaps.v24,
                 VideoButton(
