@@ -81,9 +81,15 @@ class _VideoPostState extends State<VideoPost>
         !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
+
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      _onTogglePause();
+    }
   }
 
   void _onTogglePause() {
+    if (!mounted) return; // component가 mount 되어 있지 않으면 종료
+
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
       _animationController.reverse(); // to LowerBound
@@ -100,7 +106,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _onCommentsTap(BuildContext context) async {
     if (_videoPlayerController.value.isPlaying) {
-      _onTogglePause();
+      // _onTogglePause(); // 댓글 창 열었을 때 영상 상태 지정
     }
 
     await showModalBottomSheet(
@@ -110,7 +116,7 @@ class _VideoPostState extends State<VideoPost>
       builder: (context) => VideoComments(),
     );
 
-    _onTogglePause();
+    // _onTogglePause(); // 댓글 창 닫을 때 영상 상태 지정
   }
 
   @override
@@ -191,7 +197,7 @@ class _VideoPostState extends State<VideoPost>
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                   foregroundImage: NetworkImage(
-                    "https://avatars.githubusercontent.com/u/62599036?s=400&u=959909bf283711f319881470205d49cb64bbd4e1&v=4",
+                    "https://github.com/user-attachments/assets/7207cdae-2fb9-48cc-b0d8-4a544d6a929b",
                   ),
                   child: Text("뿌꾸"),
                 ),
