@@ -41,6 +41,8 @@ class _ActivityScreenState extends State<ActivityScreen>
     }
   ];
 
+  bool _showBarrier = false;
+
   late final AnimationController _animationController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 200),
@@ -55,17 +57,27 @@ class _ActivityScreenState extends State<ActivityScreen>
     end: Offset.zero,
   ).animate(_animationController);
 
+  late final Animation<Color?> _barrierAnimation = ColorTween(
+    begin: Colors.transparent,
+    end: Colors.black38,
+  ).animate(_animationController);
+
   void _onDismissed(String notification) {
     _notifications.remove(notification);
     setState(() {});
   }
 
-  void _onTitleTap() {
+  void _toggleAnimations() async {
     if (_animationController.isCompleted) {
-      _animationController.reverse();
+      await _animationController.reverse();
     } else {
       _animationController.forward();
     }
+
+    // async : animation이 끝나길 기다린 후에 실행
+    setState(() {
+      _showBarrier = !_showBarrier;
+    });
   }
 
   @override
@@ -80,7 +92,7 @@ class _ActivityScreenState extends State<ActivityScreen>
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: _onTitleTap,
+          onTap: _toggleAnimations,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -129,7 +141,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                       child: FaIcon(
                         FontAwesomeIcons.checkDouble,
                         color: Colors.white,
-                        size: Sizes.size32,
+                        size: Sizes.size24,
                       ),
                     ),
                   ),
@@ -191,14 +203,23 @@ class _ActivityScreenState extends State<ActivityScreen>
                         ],
                       ),
                     ),
-                    trailing: const FaIcon(
-                      FontAwesomeIcons.chevronRight,
-                      size: Sizes.size16,
+                    trailing: Padding(
+                      padding: const EdgeInsets.only(left: Sizes.size10),
+                      child: const FaIcon(
+                        FontAwesomeIcons.chevronRight,
+                        size: Sizes.size16,
+                      ),
                     ),
                   ),
                 )
             ],
           ),
+          if (_showBarrier)
+            AnimatedModalBarrier(
+              color: _barrierAnimation,
+              dismissible: true,
+              onDismiss: _toggleAnimations,
+            ),
           SlideTransition(
             position: _panelAnimation,
             child: Container(
@@ -234,7 +255,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
