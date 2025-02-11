@@ -76,6 +76,8 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
+    if (!mounted) return; // component가 mount 되어 있지 않으면 종료
+
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
@@ -88,8 +90,6 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onTogglePause() {
-    if (!mounted) return; // component가 mount 되어 있지 않으면 종료
-
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
       _animationController.reverse(); // to LowerBound
