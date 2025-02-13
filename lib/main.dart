@@ -3,6 +3,7 @@ import 'package:tiktok/constants/sizes.dart';
 // import 'package:tiktok/features/authentication/sign_up_screen.dart';
 // import 'package:tiktok/features/onboarding/interests_screen.dart';
 import 'package:tiktok/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok/features/videos/video_recording_screen.dart';
 
 void main() {
   runApp(const TikTokApp());
@@ -36,7 +37,7 @@ class TikTokApp extends StatelessWidget {
           ),
         ),
       ),
-      home: MainNavigationScreen(), // SignUpScreen()
+      home: VideoRecordingScreen(), // MainNavigationScreen(), SignUpScreen()
     );
   }
 }
