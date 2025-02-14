@@ -12,10 +12,19 @@ class VideoRecordingScreen extends StatefulWidget {
   State<VideoRecordingScreen> createState() => _VideoRecordingScreenState();
 }
 
-class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
+class _VideoRecordingScreenState extends State<VideoRecordingScreen>
+    with SingleTickerProviderStateMixin {
   bool _hasPermission = false;
 
   bool _isSelfieMode = false;
+
+  late final AnimationController _animationController = AnimationController(
+    vsync: this,
+    duration: Duration(milliseconds: 200),
+  );
+
+  late final Animation<double> _buttonAnimation =
+      Tween(begin: 1.0, end: 1.3).animate(_animationController);
 
   late FlashMode _flashMode;
 
@@ -74,6 +83,14 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     await _cameraController.setFlashMode(newFlashMode);
     _flashMode = newFlashMode;
     setState(() {});
+  }
+
+  void _onTapDown(TapDownDetails _) {
+    _animationController.forward();
+  }
+
+  void _onTapUp(TapUpDetails _) {
+    _animationController.reverse();
   }
 
   @override
@@ -156,6 +173,37 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: Sizes.size40,
+                    child: GestureDetector(
+                      onTapDown: _onTapDown,
+                      onTapUp: _onTapUp,
+                      child: ScaleTransition(
+                        scale: _buttonAnimation,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            SizedBox(
+                              width: 90.0,
+                              height: 90.0,
+                              child: CircularProgressIndicator(
+                                color: Colors.red.shade400,
+                                strokeWidth: Sizes.size4,
+                              ),
+                            ),
+                            Container(
+                              width: Sizes.size80,
+                              height: Sizes.size80,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ],
