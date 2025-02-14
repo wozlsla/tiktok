@@ -13,18 +13,28 @@ class VideoRecordingScreen extends StatefulWidget {
 }
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   bool _hasPermission = false;
 
   bool _isSelfieMode = false;
 
-  late final AnimationController _animationController = AnimationController(
+  late final AnimationController _buttonAnimationController =
+      AnimationController(
     vsync: this,
     duration: Duration(milliseconds: 200),
   );
 
   late final Animation<double> _buttonAnimation =
-      Tween(begin: 1.0, end: 1.3).animate(_animationController);
+      Tween(begin: 1.0, end: 1.2).animate(_buttonAnimationController);
+
+  late final AnimationController _progressAnimationControlloer =
+      AnimationController(
+    vsync: this,
+    // duration: Duration(seconds: 10),
+    duration: Duration(seconds: 3),
+    lowerBound: 0.0,
+    upperBound: 1.0,
+  );
 
   late FlashMode _flashMode;
 
@@ -71,6 +81,18 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   void initState() {
     super.initState();
     initPermissions();
+
+    _progressAnimationControlloer.addListener(() {
+      // listene value chages
+      setState(() {});
+    });
+
+    _progressAnimationControlloer.addStatusListener((status) {
+      // listene status (when the animation finished)
+      if (status == AnimationStatus.completed) {
+        _stopRecording();
+      }
+    });
   }
 
   Future<void> _toggleSelfieMode() async {
@@ -85,12 +107,14 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     setState(() {});
   }
 
-  void _onTapDown(TapDownDetails _) {
-    _animationController.forward();
+  void _startRecording(TapDownDetails _) {
+    _buttonAnimationController.forward();
+    _progressAnimationControlloer.forward();
   }
 
-  void _onTapUp(TapUpDetails _) {
-    _animationController.reverse();
+  void _stopRecording() {
+    _buttonAnimationController.reverse();
+    _progressAnimationControlloer.reset();
   }
 
   @override
@@ -178,24 +202,25 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                   Positioned(
                     bottom: Sizes.size40,
                     child: GestureDetector(
-                      onTapDown: _onTapDown,
-                      onTapUp: _onTapUp,
+                      onTapDown: _startRecording,
+                      onTapUp: (details) => _stopRecording(),
                       child: ScaleTransition(
                         scale: _buttonAnimation,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
                             SizedBox(
-                              width: 90.0,
-                              height: 90.0,
+                              width: 86.0,
+                              height: 86.0,
                               child: CircularProgressIndicator(
                                 color: Colors.red.shade400,
                                 strokeWidth: Sizes.size4,
+                                value: _progressAnimationControlloer.value,
                               ),
                             ),
                             Container(
-                              width: Sizes.size80,
-                              height: Sizes.size80,
+                              width: 76.0,
+                              height: 76.0,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.red,
