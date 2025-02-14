@@ -133,6 +133,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     // log(file.name);
     // log(file.path);
 
+    if (!mounted) return;
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => VideoPreviewScreen(video: video),
