@@ -1,7 +1,6 @@
 import 'dart:developer';
-
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/constants/gaps.dart';
@@ -18,6 +17,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
 
   bool _isSelfieMode = false;
 
+  late FlashMode _flashMode;
+
   late CameraController _cameraController;
 
   Future<void> initCamera() async {
@@ -31,11 +32,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
 
     // 덮어쓰기, final X
     _cameraController = CameraController(
-      cameras[_isSelfieMode ? 0 : 1],
+      cameras[_isSelfieMode ? 1 : 0],
       ResolutionPreset.high,
     );
 
     await _cameraController.initialize();
+
+    _flashMode = _cameraController.value.flashMode;
   }
 
   Future<void> initPermissions() async {
@@ -67,6 +70,12 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     setState(() {});
   }
 
+  Future<void> _setFlashMode(FlashMode newFlashMode) async {
+    await _cameraController.setFlashMode(newFlashMode);
+    _flashMode = newFlashMode;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,13 +103,59 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                 children: [
                   CameraPreview(_cameraController),
                   Positioned(
-                    top: Sizes.size20,
-                    left: Sizes.size20,
-                    child: IconButton(
-                      onPressed: _toggleSelfieMode,
-                      icon: Icon(
-                        Icons.cameraswitch,
-                      ),
+                    top: Sizes.size40,
+                    right: Sizes.size12,
+                    child: Column(
+                      children: [
+                        IconButton(
+                          onPressed: _toggleSelfieMode,
+                          icon: Icon(
+                            Icons.cameraswitch,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Gaps.v10,
+                        IconButton(
+                          onPressed: () => _setFlashMode(FlashMode.off),
+                          icon: Icon(
+                            Icons.flash_off_rounded,
+                            color: _flashMode == FlashMode.off
+                                ? Colors.amber.shade200
+                                : Colors.white,
+                          ),
+                        ),
+                        Gaps.v10,
+                        IconButton(
+                          onPressed: () => _setFlashMode(FlashMode.always),
+                          icon: Icon(
+                            Icons.flash_on_rounded,
+                            color: _flashMode == FlashMode.always
+                                ? Colors.amber.shade200
+                                : Colors.white,
+                          ),
+                        ),
+                        Gaps.v10,
+                        IconButton(
+                          onPressed: () => _setFlashMode(FlashMode.auto),
+                          icon: Icon(
+                            Icons.flash_auto_rounded,
+                            color: _flashMode == FlashMode.auto
+                                ? Colors.amber.shade200
+                                : Colors.white,
+                          ),
+                        ),
+                        Gaps.v10,
+                        IconButton(
+                          onPressed: () => _setFlashMode(
+                              FlashMode.torch), // 손전등 모드, 후면(0)에서만 작동
+                          icon: Icon(
+                            Icons.flashlight_on_rounded,
+                            color: _flashMode == FlashMode.torch
+                                ? Colors.amber.shade200
+                                : Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
