@@ -17,10 +17,12 @@ class VideoRecordingScreen extends StatefulWidget {
 }
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
 
   bool _isSelfieMode = false;
+
+  bool _prepareDispose = false;
 
   late final AnimationController _buttonAnimationController =
       AnimationController(
@@ -65,6 +67,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     await _cameraController.prepareForVideoRecording(); // only for iOS
 
     _flashMode = _cameraController.value.flashMode;
+
+    setState(() {});
   }
 
   Future<void> initPermissions() async {
@@ -88,6 +92,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   void initState() {
     super.initState();
     initPermissions();
+
+    WidgetsBinding.instance.addObserver(this);
 
     _progressAnimationControlloer.addListener(() {
       // listene value chages
@@ -155,6 +161,31 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     super.dispose();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // log(state.toString());
+
+    // if (!_hasPermission) return; // inactive 의 이유가 권한이 없어서 일 때 (요청중 포함)
+    // if (!_cameraController.value.isInitialized) return;
+
+    // if (state == AppLifecycleState.inactive) {
+    //   _cameraController.dispose();
+    // } else if (state == AppLifecycleState.resumed) {
+    //   initCamera();
+    // }
+
+    if (!_hasPermission || !_cameraController.value.isInitialized) return;
+
+    if (state == AppLifecycleState.paused) {
+      _prepareDispose = true;
+      setState(() {});
+      _cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      _prepareDispose = false;
+      initCamera();
+    }
+  }
+
   Future<void> _onPickVideoPressed() async {
     final video = await ImagePicker().pickVideo(
       source: ImageSource.gallery,
@@ -200,7 +231,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
             : Stack(
                 alignment: Alignment.center,
                 children: [
-                  CameraPreview(_cameraController),
+                  if (!_prepareDispose)
+                    CameraPreview(
+                      _cameraController,
+                    ),
                   Positioned(
                     top: Sizes.size40,
                     right: Sizes.size12,
