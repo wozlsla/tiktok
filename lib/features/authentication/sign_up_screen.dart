@@ -5,6 +5,7 @@ import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/authentication/username_screen.dart';
 import 'package:tiktok/features/authentication/login_screen.dart';
 import 'package:tiktok/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -40,13 +41,15 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
-              Text(
-                "Create a profile, follow other accounts, make your own videos, and more.",
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black45,
+              Opacity(
+                opacity: 0.7,
+                child: Text(
+                  "Create a profile, follow other accounts, make your own videos, and more.",
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               Gaps.v40,
               GestureDetector(
@@ -68,10 +71,10 @@ class SignUpScreen extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         height: 60,
         elevation: 2,
-        color: Colors.grey.shade50, // bar 내부
+        color: isDarkMode(context) ? null : Colors.grey.shade50, // bar 내부
         // surfaceTintColor: Colors.grey, // over bar ??
         // color: Colors.transparent, // shadow - elevation 보기 쉬움
-        shadowColor: Colors.black,
+        // shadowColor: Colors.black,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

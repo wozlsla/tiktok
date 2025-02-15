@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok/constants/sizes.dart';
-// import 'package:tiktok/features/authentication/sign_up_screen.dart';
-// import 'package:tiktok/features/onboarding/interests_screen.dart';
+import 'package:tiktok/features/authentication/sign_up_screen.dart';
 import 'package:tiktok/features/main_navigation/main_navigation_screen.dart';
-import 'package:tiktok/features/videos/video_recording_screen.dart';
 
 void main() {
   runApp(const TikTokApp());
@@ -15,8 +13,10 @@ class TikTokApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TikTok Clone',
+      title: "TikTok Clone",
+      themeMode: ThemeMode.system,
       theme: ThemeData(
+        brightness: Brightness.light, // default
         scaffoldBackgroundColor: Colors.white,
         primaryColor: Color(0xFFE9435A),
         textSelectionTheme: TextSelectionThemeData(
@@ -37,7 +37,15 @@ class TikTokApp extends StatelessWidget {
           ),
         ),
       ),
-      home: VideoRecordingScreen(), // MainNavigationScreen(), SignUpScreen()
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.black,
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade800,
+        ),
+        primaryColor: Color(0xFFE9435A),
+      ),
+      home: SignUpScreen(), // MainNavigationScreen()
     );
   }
 }
