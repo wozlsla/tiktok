@@ -48,6 +48,7 @@ class SignUpScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: Sizes.size16,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               Gaps.v40,
@@ -67,30 +68,31 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        height: 60,
-        elevation: 2,
-        color: isDarkMode(context) ? null : Colors.grey.shade50, // bar 내부
-        // surfaceTintColor: Colors.grey, // over bar ??
-        // color: Colors.transparent, // shadow - elevation 보기 쉬움
-        // shadowColor: Colors.black,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Already have an account?"),
-            Gaps.h5,
-            GestureDetector(
-              onTap: () => _onLoginTap(context),
-              child: Text(
-                "Log in",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Theme.of(context).primaryColor,
-                  // color: Theme.of(context).colorScheme.primary,
+      bottomNavigationBar: Container(
+        height: 94,
+        color: isDarkMode(context) ? Colors.grey.shade900 : Colors.grey.shade50,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            bottom: Sizes.size28,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Already have an account?"),
+              Gaps.h5,
+              GestureDetector(
+                onTap: () => _onLoginTap(context),
+                child: Text(
+                  "Log in",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).primaryColor,
+                    // color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

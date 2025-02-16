@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/authentication/sign_up_screen.dart';
 import 'package:tiktok/features/main_navigation/main_navigation_screen.dart';
 
@@ -15,6 +16,7 @@ class TikTokApp extends StatelessWidget {
       title: "TikTok Clone",
       themeMode: ThemeMode.system,
       theme: ThemeData(
+        useMaterial3: true, // default. (false: Material Design 2)
         brightness: Brightness.light, // default
         scaffoldBackgroundColor: Colors.white,
         primaryColor: Color(0xFFE9435A),
@@ -22,12 +24,21 @@ class TikTokApp extends StatelessWidget {
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Color(0xFFE9435A),
         ),
-        useMaterial3: false,
         // splashColor: Colors.transparent,
         // highlightColor: Colors.transparent,
         appBarTheme: AppBarTheme(
+          surfaceTintColor: Colors.white, // Material Design 3
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
+          elevation: 0,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: Sizes.size18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.white,
           elevation: 0,
         ),
         tabBarTheme: TabBarTheme(
@@ -40,19 +51,30 @@ class TikTokApp extends StatelessWidget {
           iconColor: Colors.black,
         ),
       ),
-
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
         primaryColor: Color(0xFFE9435A),
-        useMaterial3: false,
         textTheme: Typography.whiteMountainView,
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Color(0xFFE9435A),
           selectionColor: Color(0xFFE9435A).withValues(alpha: 0.6),
         ),
         appBarTheme: AppBarTheme(
+          surfaceTintColor: Colors.grey.shade900,
+          scrolledUnderElevation: 0,
           backgroundColor: Colors.grey.shade900,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: Sizes.size18,
+            fontWeight: FontWeight.w600,
+          ),
+          actionsIconTheme: IconThemeData(
+            color: Colors.grey.shade100,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.grey.shade100,
+          ),
         ),
         bottomAppBarTheme: BottomAppBarTheme(
           color: Colors.grey.shade900,
@@ -60,9 +82,11 @@ class TikTokApp extends StatelessWidget {
         ),
         tabBarTheme: TabBarTheme(
           indicatorColor: Colors.white,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.grey.shade700,
         ),
       ),
-      home: MainNavigationScreen(), // SignUpScreen()
+      home: SignUpScreen(), // MainNavigationScreen()
     );
   }
 }
