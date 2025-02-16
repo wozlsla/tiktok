@@ -35,7 +35,12 @@ class TikTokApp extends StatelessWidget {
           unselectedLabelColor: Colors.grey.shade500,
           indicatorColor: Colors.black,
         ),
+        // iconTheme:
+        listTileTheme: ListTileThemeData(
+          iconColor: Colors.black,
+        ),
       ),
+
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
