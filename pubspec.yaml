@@ -37,6 +37,8 @@ dependencies:
 
   font_awesome_flutter: 10.3.0
 
+  google_fonts: ^6.2.1
+
   video_player: 2.4.10
   visibility_detector: 0.3.3
 
@@ -45,7 +47,7 @@ dependencies:
   camera: ^0.11.1
   permission_handler: ^10.2.0
 
-  gallery_saver: 2.3.2
+  # gallery_saver: 2.3.2 # version solving failed (http, google_fonts)
   image_picker: ^1.1.2
 
 dev_dependencies:
