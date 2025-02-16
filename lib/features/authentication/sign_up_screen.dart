@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/authentication/username_screen.dart';
@@ -45,7 +46,8 @@ class SignUpScreen extends StatelessWidget {
                 opacity: 0.7,
                 child: Text(
                   "Create a profile, follow other accounts, make your own videos, and more.",
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: GoogleFonts.abel(
+                      textStyle: Theme.of(context).textTheme.titleMedium),
                   textAlign: TextAlign.center,
                 ),
               ),
