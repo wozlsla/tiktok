@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/authentication/sign_up_screen.dart';
 import 'package:tiktok/features/main_navigation/main_navigation_screen.dart';
 
@@ -18,27 +16,36 @@ class TikTokApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: ThemeData(
         brightness: Brightness.light, // default
-        textTheme: Typography.blackMountainView,
         scaffoldBackgroundColor: Colors.white,
         primaryColor: Color(0xFFE9435A),
+        textTheme: Typography.blackMountainView,
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: Color(0xFFE9435A),
-          // selectionColor: Color(0xFFE9435A),
         ),
+        useMaterial3: false,
         // splashColor: Colors.transparent,
         // highlightColor: Colors.transparent,
-        useMaterial3: false,
         appBarTheme: AppBarTheme(
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
           elevation: 0,
         ),
+        tabBarTheme: TabBarTheme(
+          labelColor: Colors.black,
+          unselectedLabelColor: Colors.grey.shade500,
+          indicatorColor: Colors.black,
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        textTheme: Typography.whiteMountainView,
         scaffoldBackgroundColor: Colors.black,
+        primaryColor: Color(0xFFE9435A),
         useMaterial3: false,
+        textTheme: Typography.whiteMountainView,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
+          selectionColor: Color(0xFFE9435A).withValues(alpha: 0.6),
+        ),
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey.shade900,
         ),
@@ -46,9 +53,11 @@ class TikTokApp extends StatelessWidget {
           color: Colors.grey.shade900,
           elevation: 0,
         ),
-        primaryColor: Color(0xFFE9435A),
+        tabBarTheme: TabBarTheme(
+          indicatorColor: Colors.white,
+        ),
       ),
-      home: SignUpScreen(), // MainNavigationScreen()
+      home: MainNavigationScreen(), // SignUpScreen()
     );
   }
 }
