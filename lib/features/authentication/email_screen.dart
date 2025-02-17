@@ -5,6 +5,8 @@ import 'package:tiktok/features/authentication/password_screen.dart';
 import 'package:tiktok/features/authentication/widgets/form_button.dart';
 
 class EmailScreen extends StatefulWidget {
+  static String routeName = "/email";
+
   const EmailScreen({super.key});
 
   @override
