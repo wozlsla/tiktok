@@ -28,7 +28,8 @@ final router = GoRouter(
       builder: (context, state) {
         // print(state.params);
         final username = state.params["username"];
-        return UserProfileScreen(username: username!);
+        final tab = state.queryParams["show"];
+        return UserProfileScreen(username: username!, tab: tab!);
       },
     ),
   ],
