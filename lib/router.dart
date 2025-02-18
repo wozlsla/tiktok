@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok/features/authentication/email_screen.dart';
 import 'package:tiktok/features/authentication/login_screen.dart';
@@ -16,8 +17,20 @@ final router = GoRouter(
       builder: (context, state) => LoginScreen(),
     ),
     GoRoute(
+      name: "username_screen", // NamedRoute
       path: UsernameScreen.routeName,
-      builder: (context, state) => UsernameScreen(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: UsernameScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: ScaleTransition(
+              scale: animation,
+              child: child,
+            ),
+          );
+        },
+      ),
     ),
     GoRoute(
       path: EmailScreen.routeName,
