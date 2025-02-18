@@ -4,11 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/authentication/login_screen.dart';
+import 'package:tiktok/features/authentication/username_screen.dart';
 import 'package:tiktok/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static const routeName = "/";
+  static const routeURL = "/";
+  static const routeName = "signUp";
+
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) {
@@ -16,8 +19,8 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
-    context.pushNamed("username_screen"); // NamedRoute
-    // context.push(UsernameScreen.routeName); // "/username"
+    // context.pushNamed("username_screen"); // NamedRoute
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   @override

@@ -9,14 +9,37 @@ import 'package:tiktok/features/users/user_profile_screen.dart';
 final router = GoRouter(
   routes: [
     GoRoute(
-      path: "/",
+      path: SignUpScreen.routeURL,
+      name: SignUpScreen.routeName,
       builder: (context, state) => SignUpScreen(),
+      // nasted
+      routes: [
+        GoRoute(
+          path: UsernameScreen.routeURL,
+          name: UsernameScreen.routeName,
+          builder: (context, state) => UsernameScreen(),
+          routes: [
+            GoRoute(
+              path: EmailScreen.routeURL,
+              name: EmailScreen.routeName,
+              builder: (context, state) {
+                final args = state.extra as EmailScreenArgs?;
+                if (args == null) {
+                  return const EmailScreen(username: "");
+                }
+                return EmailScreen(username: args.username);
+              },
+            ),
+          ],
+        ),
+      ],
     ),
-    GoRoute(
+    // // signup url 이 "/" 인데, "/login"(/ 내부) 이기때문에 error
+/*     GoRoute(
       path: LoginScreen.routeName,
       builder: (context, state) => LoginScreen(),
-    ),
-    GoRoute(
+    ), */
+    /*  GoRoute(
       name: "username_screen", // NamedRoute
       path: UsernameScreen.routeName,
       pageBuilder: (context, state) => CustomTransitionPage(
@@ -31,17 +54,7 @@ final router = GoRouter(
           );
         },
       ),
-    ),
-    GoRoute(
-      path: EmailScreen.routeName,
-      builder: (context, state) {
-        final args = state.extra as EmailScreenArgs?;
-        if (args == null) {
-          return const EmailScreen(username: "");
-        }
-        return EmailScreen(username: args.username);
-      },
-    ),
+    ), */
     GoRoute(
       path: "/users/:username",
       builder: (context, state) {
