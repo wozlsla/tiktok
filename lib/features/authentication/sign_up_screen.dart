@@ -9,18 +9,22 @@ import 'package:tiktok/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static const routeURL = "/";
-  static const routeName = "signUp";
+  static const String routeName = "signUp";
+  static const String routeURL = "/";
 
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) {
-    context.push(LoginScreen.routeName); // "/login"
+    context.pushNamed(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
-    // context.pushNamed("username_screen"); // NamedRoute
-    context.pushNamed(UsernameScreen.routeName);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UsernameScreen(),
+      ),
+    );
   }
 
   @override
