@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok/common/widgets/main_navigation/main_navigation_screen.dart';
 import 'package:tiktok/features/activity/activity_screen.dart';
 import 'package:tiktok/features/authentication/login_screen.dart';
 import 'package:tiktok/features/authentication/sign_up_screen.dart';
 import 'package:tiktok/features/onboarding/interests_screen.dart';
+import 'package:tiktok/features/videos/video_recording_screen.dart';
 
 final router = GoRouter(
   initialLocation: "/inbox",
@@ -35,6 +37,25 @@ final router = GoRouter(
       name: ActivityScreen.routeName,
       path: ActivityScreen.routeURL,
       builder: (context, state) => ActivityScreen(),
+    ),
+    GoRoute(
+      name: VideoRecordingScreen.routeName,
+      path: VideoRecordingScreen.routeURL,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        transitionDuration: Duration(milliseconds: 200),
+        child: VideoRecordingScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final position = Tween(
+            begin: Offset(0, 1),
+            end: Offset.zero,
+          ).animate(animation);
+
+          return SlideTransition(
+            position: position,
+            child: child,
+          );
+        },
+      ),
     ),
   ],
 );

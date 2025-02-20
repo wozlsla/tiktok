@@ -12,6 +12,9 @@ import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/features/videos/video_preview_screen.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
+  static const String routeName = "postVideo";
+  static const String routeURL = "/upload";
+
   const VideoRecordingScreen({super.key});
 
   @override
@@ -169,7 +172,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   void dispose() {
     _progressAnimationControlloer.dispose();
     _buttonAnimationController.dispose();
-    _cameraController.dispose();
+    if (!_noCamera) {
+      _cameraController.dispose();
+    }
     super.dispose();
   }
 
@@ -185,6 +190,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     // } else if (state == AppLifecycleState.resumed) {
     //   initCamera();
     // }
+    if (_noCamera) return;
 
     if (!_hasPermission) return;
 
@@ -251,6 +257,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                     CameraPreview(
                       _cameraController,
                     ),
+                  Positioned(
+                    top: Sizes.size40,
+                    left: Sizes.size20,
+                    child: CloseButton(
+                      color: Colors.white,
+                    ),
+                  ),
                   if (!_noCamera)
                     Positioned(
                       top: Sizes.size40,
