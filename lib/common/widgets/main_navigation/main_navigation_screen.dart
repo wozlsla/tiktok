@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +35,25 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     "profile",
   ];
 
-  late int _selectedIndex = _tabs.indexOf(widget.tab);
+  // late int _selectedIndex = _tabs.indexOf(widget.tab);
+  late int _selectedIndex = max(_tabs.indexOf(widget.tab), 0);
+
+  void _check() {
+    if (_selectedIndex != _tabs.indexOf(widget.tab)) {
+      _selectedIndex = max(_tabs.indexOf(widget.tab), 0);
+      setState(() {});
+    }
+  }
+
+/*   @override
+  void didUpdateWidget(covariant MainNavigationScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.tab != widget.tab) {
+      setState(() {
+        _selectedIndex = _tabs.indexOf(widget.tab);
+      });
+    }
+  } */
 
   void _onTap(int index) {
     context.go("/${_tabs[index]}");
@@ -57,6 +77,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _check();
+
     final isDark = isDarkMode(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
