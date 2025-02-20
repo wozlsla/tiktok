@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/activity/activity_screen.dart';
 
@@ -9,9 +10,7 @@ class InboxScreen extends StatelessWidget {
   void _onDmPressed() {}
 
   void _onActivityTab(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => ActivityScreen(),
-    ));
+    context.pushNamed(ActivityScreen.routeName);
   }
 
   @override
