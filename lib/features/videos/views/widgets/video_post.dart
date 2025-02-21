@@ -74,6 +74,7 @@ class VideoPostState extends ConsumerState<VideoPost>
   @override
   void dispose() {
     _videoPlayerController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -81,7 +82,8 @@ class VideoPostState extends ConsumerState<VideoPost>
     if (!mounted) return;
 
     final muted = ref.read(playbackConfigProvider).muted;
-    ref.read(playbackConfigProvider.notifier).setMuted(!muted);
+    ref.read(playbackConfigProvider.notifier).setMuted(!muted); // 깨짐 issue
+
     if (muted) {
       _videoPlayerController.setVolume(0);
     } else {
@@ -95,7 +97,7 @@ class VideoPostState extends ConsumerState<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      _onPlaybackConfigChanged(); // add
+      // _onPlaybackConfigChanged(false); // add
       if (ref.read(playbackConfigProvider).autoplay) {
         _videoPlayerController.play();
       }
@@ -115,9 +117,7 @@ class VideoPostState extends ConsumerState<VideoPost>
       _animationController.forward(); // to UpperBound
     }
     setState(() {
-      // print('bf: $_isPaused'); // true
       _isPaused = !_isPaused;
-      // print('af: $_isPaused'); // false
     });
   }
 

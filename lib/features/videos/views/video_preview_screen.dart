@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gal/gal.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tiktok/features/videos/view_models/timeline_vm.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoPreviewScreen extends StatefulWidget {
+class VideoPreviewScreen extends ConsumerStatefulWidget {
   final XFile video;
   final bool isPicked;
 
@@ -17,22 +20,27 @@ class VideoPreviewScreen extends StatefulWidget {
   });
 
   @override
-  State<VideoPreviewScreen> createState() => _VideoPreviewScreenState();
+  VideoPreviewScreenState createState() => VideoPreviewScreenState();
 }
 
-class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
+class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
 
   bool _saveVideo = false;
 
   Future<void> _initVideo() async {
-    _videoPlayerController = VideoPlayerController.file(
-      File(widget.video.path),
-    );
+    // _videoPlayerController = VideoPlayerController.file(
+    //   File(widget.video.path),
+    // );
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/videos/pooku_attack.mp4"); // test
 
-    await _videoPlayerController.initialize();
+    print("Picked Video Path: ${widget.video.path}"); // .jpg
+
+    await _videoPlayerController.initialize(); // errors !!!
     await _videoPlayerController.setLooping(true);
     await _videoPlayerController.play();
+    // await _videoPlayerController.play();
 
     setState(() {});
   }
@@ -62,11 +70,14 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     setState(() {});
   }
 
+  void _onUploadPressed() {
+    ref.read(timelineProvider.notifier).uploadVideo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: Text("Video Preview"),
         actions: [
           if (!widget.isPicked)
@@ -75,7 +86,15 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
               icon: FaIcon(_saveVideo
                   ? FontAwesomeIcons.check
                   : FontAwesomeIcons.download),
-            )
+            ),
+          IconButton(
+            onPressed: _onUploadPressed,
+            icon: ref.watch(timelineProvider).isLoading
+                ? CircularProgressIndicator.adaptive()
+                : FaIcon(
+                    FontAwesomeIcons.cloudArrowUp,
+                  ),
+          ),
         ],
       ),
       body: _videoPlayerController.value.isInitialized

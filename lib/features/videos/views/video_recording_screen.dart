@@ -1,4 +1,4 @@
-import 'dart:developer';
+// import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -57,13 +57,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   Future<void> initCamera() async {
     final cameras = await availableCameras();
 
-    // log(cameras.toString());
-
     if (cameras.isEmpty) {
       return;
     }
 
-    // 덮어쓰기, final X
     _cameraController = CameraController(
       cameras[_isSelfieMode ? 1 : 0],
       ResolutionPreset.high,
@@ -71,7 +68,6 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     );
 
     await _cameraController.initialize();
-
     await _cameraController.prepareForVideoRecording(); // only for iOS
 
     _flashMode = _cameraController.value.flashMode;
@@ -191,9 +187,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     //   initCamera();
     // }
     if (_noCamera) return;
-
     if (!_hasPermission) return;
-
     if (!_hasPermission || !_cameraController.value.isInitialized) return;
 
     if (state == AppLifecycleState.paused) {
@@ -213,6 +207,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
     if (video == null) return;
     // log(video);
+    print("Video Path: ${video.path}"); // .jpg
 
     if (!mounted) return;
 
