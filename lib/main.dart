@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/videos/repos/playback_config_repo.dart';
@@ -15,11 +15,10 @@ void main() async {
   final repository = PlaybackConfigRepository(preferences); // 그것으로 repo 초기화
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) =>
-              PlaybackConfigViewModel(repository), // 그것으로 VM 호출
+    ProviderScope(
+      overrides: [
+        playbackConfigProvider.overrideWith(
+          () => PlaybackConfigViewModel(repository),
         ),
       ],
       child: const TikTokApp(),

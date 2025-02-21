@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok/features/videos/view_models/playback_config_vm.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -69,10 +68,6 @@ class _VideoPostState extends State<VideoPost>
       // print(_animationController.value);
       // setState(() {}); // value 가 변하는 모든 순간을 build method가 capture 가능하도록
     });
-
-    context
-        .read<PlaybackConfigViewModel>()
-        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -83,9 +78,8 @@ class _VideoPostState extends State<VideoPost>
 
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
-    final muted = context.read<PlaybackConfigViewModel>().muted;
 
-    if (muted) {
+    if (false) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -98,9 +92,8 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
-      _onPlaybackConfigChanged(); // add
-      if (autoplay) {
+      // _onPlaybackConfigChanged(); // add
+      if (false) {
         _videoPlayerController.play();
       }
     }
@@ -187,14 +180,10 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              icon: Icon(context.watch<PlaybackConfigViewModel>().muted
-                  ? Icons.volume_off_outlined
-                  : Icons.volume_up_outlined),
-              onPressed: () {
-                context
-                    .read<PlaybackConfigViewModel>()
-                    .setMuted(!context.read<PlaybackConfigViewModel>().muted);
-              },
+              icon: Icon(
+                false ? Icons.volume_off_outlined : Icons.volume_up_outlined,
+              ),
+              onPressed: () {},
             ),
           ),
           Positioned(
