@@ -4,8 +4,8 @@ import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
-import 'package:tiktok/features/videos/widgets/video_button.dart';
-import 'package:tiktok/features/videos/widgets/video_comments.dart';
+import 'package:tiktok/features/videos/views/widgets/video_button.dart';
+import 'package:tiktok/features/videos/views/widgets/video_comments.dart';
 
 class VideoPost extends StatefulWidget {
   final Function onVideoFinished;
@@ -160,6 +160,15 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            left: 20,
+            top: 40,
+            child: IconButton(
+              icon: Icon(
+                  false ? Icons.volume_up_outlined : Icons.volume_off_outlined),
+              onPressed: () {},
             ),
           ),
           Positioned(
