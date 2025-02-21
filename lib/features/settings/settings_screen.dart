@@ -1,29 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:tiktok/features/videos/models/playback_config_model.dart';
 import 'package:tiktok/features/videos/view_models/playback_config_vm.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notifications = false;
-
-  void _onNotificationsChanged(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notifications = newValue; // bool 변경
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Settings"),
@@ -31,28 +17,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: [
           SwitchListTile.adaptive(
-            value: false,
-            onChanged: (value) => {},
+            value: ref.watch(playbackConfigProvider).muted, // data 접근 (exposed)
+            onChanged: (value) => ref
+                .read(playbackConfigProvider.notifier)
+                .setMuted(value) // class 접근
+            ,
             title: Text("Mute video"),
             subtitle: Text("Video will be muted by default."),
           ),
           SwitchListTile.adaptive(
-            value: false,
-            onChanged: (value) => {},
+            value: ref.watch(playbackConfigProvider).autoplay,
+            onChanged: (value) =>
+                ref.read(playbackConfigProvider.notifier).setAutoplay(value),
             title: Text("Autoplay video"),
             subtitle: Text("Video will start playing automatically."),
           ),
           SwitchListTile.adaptive(
-            value: _notifications,
-            onChanged: _onNotificationsChanged,
+            value: false,
+            onChanged: (value) => {},
             title: const Text("Enable notifications"),
             subtitle: const Text("They will be cute."),
           ),
           CheckboxListTile(
             activeColor: Theme.of(context).primaryColor,
             // checkColor: Colors.black,
-            value: _notifications,
-            onChanged: _onNotificationsChanged,
+            value: false,
+            onChanged: (value) => {},
             title: const Text("Marketing emails"),
             subtitle: const Text("We won't spam you."),
           ),
@@ -64,31 +54,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 firstDate: DateTime(1960),
                 lastDate: DateTime(2030),
               );
-              print(date);
-
+              if (kDebugMode) {
+                print(date);
+              }
               final time = await showTimePicker(
                 context: context,
                 initialTime: TimeOfDay.now(),
               );
-              print(time);
-
+              if (kDebugMode) {
+                print(time);
+              }
               final booking = await showDateRangePicker(
                 context: context,
                 firstDate: DateTime(2025),
                 lastDate: DateTime(2030),
-                // builder: (context, child) {
-                //   return Theme(
-                //     data: ThemeData(
-                //       appBarTheme: AppBarTheme(
-                //         foregroundColor: Colors.white,
-                //         backgroundColor: Colors.black,
-                //       ),
-                //     ),
-                //     child: child!,
-                //   );
-                // },
+                builder: (context, child) {
+                  return Theme(
+                    data: ThemeData(
+                      appBarTheme: AppBarTheme(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.black,
+                      ),
+                    ),
+                    child: child!,
+                  );
+                },
               );
-              print(booking);
+              if (kDebugMode) {
+                print(booking);
+              }
             },
             title: const Text("What is your birthday?"),
             subtitle: const Text("I need to know!"),

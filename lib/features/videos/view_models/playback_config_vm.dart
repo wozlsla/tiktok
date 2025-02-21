@@ -1,5 +1,4 @@
 // data + UI
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok/features/videos/models/playback_config_model.dart';
 import 'package:tiktok/features/videos/repos/playback_config_repo.dart';
@@ -31,7 +30,7 @@ class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
     );
   }
 
-  /* build() : 데이터(state)의 초기 상태 반환 
+  /* build() : 데이터(state)의 초기 상태 반환. Notifier가 노출할 데이터를 제공하는 방법. 
       Notifier 내부라면 어디든지 state(data)에 접근,수정 가능 */
   @override
   PlaybackConfigModel build() {
