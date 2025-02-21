@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/features/videos/repos/playback_config_repo.dart';
+import 'package:tiktok/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok/router.dart';
 
-void main() {
-  runApp(const TikTokApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  /* Provider 초기화 : SharedPreferences 의 Instance 에 접근이 필요한데, Future 이므로 */
+
+  final preferences = await SharedPreferences.getInstance(); // 접근
+  final repository = PlaybackConfigRepository(preferences); // 그것으로 repo 초기화
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) =>
+              PlaybackConfigViewModel(repository), // 그것으로 VM 호출
+        ),
+      ],
+      child: const TikTokApp(),
+    ),
+  );
 }
 
 class TikTokApp extends StatelessWidget {

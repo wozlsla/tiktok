@@ -8,7 +8,7 @@ import 'package:tiktok/features/onboarding/interests_screen.dart';
 import 'package:tiktok/features/videos/views/video_recording_screen.dart';
 
 final router = GoRouter(
-  initialLocation: "/inbox",
+  initialLocation: "/profile",
   routes: [
     GoRoute(
       name: SignUpScreen.routeName,

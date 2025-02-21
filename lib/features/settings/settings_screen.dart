@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:tiktok/features/videos/models/playback_config_model.dart';
+import 'package:tiktok/features/videos/view_models/playback_config_vm.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -27,6 +30,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
+          SwitchListTile.adaptive(
+            // value: context.watch<PlaybackConfigModel>().muted, // ProviderNotFoundException 에러 내고 읽어봄
+            value: context.watch<PlaybackConfigViewModel>().muted,
+            onChanged: (value) =>
+                context.read<PlaybackConfigViewModel>().setMuted(value),
+            title: Text("Mute video"),
+            subtitle: Text("Video will be muted by default."),
+          ),
+          SwitchListTile.adaptive(
+            value: context.watch<PlaybackConfigViewModel>().autoplay,
+            onChanged: (value) =>
+                context.read<PlaybackConfigViewModel>().setAutoplay(value),
+            title: Text("Autoplay video"),
+            subtitle: Text("Video will start playing automatically."),
+          ),
           SwitchListTile.adaptive(
             value: _notifications,
             onChanged: _onNotificationsChanged,
