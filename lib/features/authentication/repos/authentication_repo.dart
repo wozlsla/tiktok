@@ -8,9 +8,16 @@ class AuthenticationRepository {
 
   bool get isLoggedIn => user != null;
 
-  // getter
   // getter 에 value 를 넣어주면 그걸 property 처럼 사용 가능함.
   User? get user => _firebaseAuth.currentUser;
+
+  // create account
+  Future<void> signUp(String email, String password) async {
+    await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
 }
 
 final authRepo = Provider((ref) => AuthenticationRepository());

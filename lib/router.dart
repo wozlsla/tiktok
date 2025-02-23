@@ -11,9 +11,8 @@ import 'package:tiktok/features/videos/views/video_recording_screen.dart';
 
 final routerProvider = Provider(
   (ref) {
-    // ref.read(authRepo);
     return GoRouter(
-      initialLocation: "/home",
+      initialLocation: "/",
       redirect: (context, state) {
         final isLoggedIn = ref.read(authRepo).isLoggedIn;
         if (!isLoggedIn) {
