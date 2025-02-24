@@ -11,6 +11,12 @@ class AuthenticationRepository {
   // getter 에 value 를 넣어주면 그걸 property 처럼 사용 가능함.
   User? get user => _firebaseAuth.currentUser;
 
+  Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
+
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
+
   // create account
   Future<void> signUp(String email, String password) async {
     await _firebaseAuth.createUserWithEmailAndPassword(
@@ -21,3 +27,9 @@ class AuthenticationRepository {
 }
 
 final authRepo = Provider((ref) => AuthenticationRepository());
+
+// user의 인증 상태 변경 감지 (sign-in, sign-out)
+final authState = StreamProvider((ref) {
+  final repo = ref.read(authRepo);
+  return repo.authStateChanges();
+});
