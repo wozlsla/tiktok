@@ -7,12 +7,22 @@ A new Flutter project.
 
 ## Learn Flutter
 
-[틱톡 클론코딩](https://nomadcoders.co/tiktok-clone "NomadCoders")
+[틱톡 클론](https://nomadcoders.co/tiktok-clone "NomadCoders")
 
-- Flutter, Dart
+- Flutter (Dart)
+  - App/Web UI
+  - Camera/Video
+  - Darkmode
+  - Navigation & GoRouter
+  - State Management : Riverpod & MVVM
 - Firebase
+  - Authentication (signup, login, social login)
+  - Database, Storage : uploading video
 
-### Reference
+<br/>  
+<br/>
 
-- Sizing table : [Tailwind CSS](https://tailwindcss.com/) (lib/constants/sizes.dart)
+Reference
+
+- Sizing table : [Tailwind CSS](https://tailwindcss.com/) (sizes, gaps)
 - UI/UX pattern reference tool : [Mobbin](https://mobbin.com/)
