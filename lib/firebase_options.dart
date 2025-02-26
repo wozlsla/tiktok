@@ -47,28 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAwJC3_sLwP6x4Djz6jqqGUtlAv6yIRCw8',
-    appId: '1:519406637037:web:b82a2a333bf1516d3f61e4',
-    messagingSenderId: '519406637037',
-    projectId: 'tiktok-25',
-    authDomain: 'tiktok-25.firebaseapp.com',
-    storageBucket: 'tiktok-25.firebasestorage.app',
+    apiKey: 'AIzaSyBGKaEzyazMG3uNAdoz-sHIyFuqWwZTYmo',
+    appId: '1:307630928361:web:a9953d400e0ce3edf35b78',
+    messagingSenderId: '307630928361',
+    projectId: 'tiktok-app-25',
+    authDomain: 'tiktok-app-25.firebaseapp.com',
+    storageBucket: 'tiktok-app-25.firebasestorage.app',
+    measurementId: 'G-7T9L69YYV1',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA7cWJuhwfY0sEnkDUwdVgSuR8kAvCZ38U',
-    appId: '1:519406637037:android:638912927b4658073f61e4',
-    messagingSenderId: '519406637037',
-    projectId: 'tiktok-25',
-    storageBucket: 'tiktok-25.firebasestorage.app',
+    apiKey: 'AIzaSyDAEP4MxCl8VhvIOg3Ntb0JreIbY8pVeYM',
+    appId: '1:307630928361:android:d86155ff8fe6d7dff35b78',
+    messagingSenderId: '307630928361',
+    projectId: 'tiktok-app-25',
+    storageBucket: 'tiktok-app-25.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDU69ewyRSrhmR5OirYMW1EdkTrC_BABIY',
-    appId: '1:519406637037:ios:7488dfafcef7b0b03f61e4',
-    messagingSenderId: '519406637037',
-    projectId: 'tiktok-25',
-    storageBucket: 'tiktok-25.firebasestorage.app',
+    apiKey: 'AIzaSyDs5znpwm1bL2newMkEWSH6nHvn5LT6Ov8',
+    appId: '1:307630928361:ios:bfae587a5bf063d7f35b78',
+    messagingSenderId: '307630928361',
+    projectId: 'tiktok-app-25',
+    storageBucket: 'tiktok-app-25.firebasestorage.app',
     iosBundleId: 'com.wozlsla.tiktok',
   );
 

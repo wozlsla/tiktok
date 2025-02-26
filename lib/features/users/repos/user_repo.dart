@@ -6,7 +6,9 @@ class UserRepoitory {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // create profile
-  Future<void> createProfile(UserProfileModel user) async {}
+  Future<void> createProfile(UserProfileModel profile) async {
+    await _db.collection("users").doc(profile.uid).set(profile.toJson());
+  }
 
   // get profile
 

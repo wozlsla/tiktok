@@ -11,13 +11,13 @@ import 'package:tiktok/features/videos/views/video_recording_screen.dart';
 
 final routerProvider = Provider(
   (ref) {
-    final user = ref.watch(authState);
-    final uid = user.value?.uid;
-    final isLoggedIn = uid != null && uid.isNotEmpty;
+    // final user = ref.watch(authState);
+    // final uid = user.value?.uid;
+    // final isLoggedIn = uid != null && uid.isNotEmpty;
     return GoRouter(
       initialLocation: "/home",
       redirect: (context, state) {
-        // final isLoggedIn = ref.read(authRepo).isLoggedIn;
+        final isLoggedIn = ref.read(authRepo).isLoggedIn;
         if (!isLoggedIn) {
           if (state.subloc != SignUpScreen.routeURL &&
               state.subloc != LoginScreen.routeURL) {
