@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gal/gal.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tiktok/features/videos/view_models/timeline_vm.dart';
+import 'package:tiktok/features/videos/view_models/upload_video_vm.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPreviewScreen extends ConsumerStatefulWidget {
@@ -25,21 +25,19 @@ class VideoPreviewScreen extends ConsumerStatefulWidget {
 
 class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
-
   bool _saveVideo = false;
 
   Future<void> _initVideo() async {
-    _videoPlayerController = VideoPlayerController.file(
-      File(widget.video.path),
-    );
-    // _videoPlayerController =
-    //     VideoPlayerController.asset("assets/videos/pooku_attack.mp4"); // test
+    // _videoPlayerController = VideoPlayerController.file(
+    //   File(widget.video.path),
+    // );
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/videos/pooku_attack.mp4"); // test
 
-    print("Picked Video Path: ${widget.video.path}"); // .jpg
-
-    await _videoPlayerController.initialize(); // errors !!!
+    await _videoPlayerController.initialize(); // simulator format errors
     await _videoPlayerController.setLooping(true);
     await _videoPlayerController.play();
+    await _videoPlayerController.setVolume(0);
     // await _videoPlayerController.play();
 
     setState(() {});
@@ -71,7 +69,10 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
   }
 
   void _onUploadPressed() {
-    ref.read(timelineProvider.notifier).uploadVideo();
+    ref.read(uploadVideoProvider.notifier).uploadVideo(
+          File(widget.video.path),
+          context,
+        );
   }
 
   @override
@@ -89,7 +90,7 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
             ),
           IconButton(
             onPressed: _onUploadPressed,
-            icon: ref.watch(timelineProvider).isLoading
+            icon: ref.watch(uploadVideoProvider).isLoading
                 ? CircularProgressIndicator.adaptive()
                 : FaIcon(
                     FontAwesomeIcons.cloudArrowUp,
