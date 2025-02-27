@@ -1,6 +1,9 @@
 # TikTok
 
-A new Flutter project.
+작업물 (진행 중)
+
+https://github.com/user-attachments/assets/dfe2d996-0ad2-46a9-8741-368a8bef9ce5
+
 
 <br/>  
 <br/>
@@ -14,10 +17,11 @@ A new Flutter project.
   - Camera/Video
   - Darkmode
   - Navigation & GoRouter
-  - State Management : Riverpod & MVVM
+  - State Management : Provider & MVVM
 - Firebase
   - Authentication (signup, login, social login)
   - Database, Storage : uploading video
+  - Filtering (search)
 
 <br/>  
 <br/>
