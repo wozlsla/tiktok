@@ -28,7 +28,7 @@ class Avatar extends ConsumerWidget {
     );
     if (xfile != null) {
       final file = File(xfile.path);
-      await ref.read(avatarProvider.notifier).uploadAvatar(file);
+      ref.read(avatarProvider.notifier).uploadAvatar(file);
       await ref.read(avatarProvider.notifier).downloadAvatar(uid);
     }
   }
@@ -52,8 +52,7 @@ class Avatar extends ConsumerWidget {
               radius: 50,
               foregroundImage: hasAvatar
                   ? NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/tiktok-app-25.firebasestorage.app/o/avatars%2F$uid?alt=media",
-                      // "https://avatars.githubusercontent.com/u/62599036?v=4",
+                      "https://firebasestorage.googleapis.com/v0/b/tiktok-app-25.firebasestorage.app/o/avatars%2F$uid?alt=media&haha=${DateTime.now().toString()}",
                     )
                   : null,
               child: Text(name),
