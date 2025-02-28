@@ -36,4 +36,15 @@ class VideoModel {
       "createdAt": createdAt,
     };
   }
+
+  VideoModel.empty()
+      : title = "",
+        description = "",
+        fileUrl = "assets/videos/pooku_attack.mp4",
+        thumbnailUrl = "",
+        creatorUid = "",
+        creator = "",
+        likes = 0,
+        comments = 0,
+        createdAt = 0;
 }

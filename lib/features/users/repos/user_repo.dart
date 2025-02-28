@@ -10,7 +10,11 @@ class UserRepoitory {
     await _db.collection("users").doc(profile.uid).set(profile.toJson());
   }
 
-  // get profile
+  // get profile (fetch)
+  Future<Map<String, dynamic>?> findProfile(String uid) async {
+    final doc = await _db.collection("users").doc(uid).get();
+    return doc.data();
+  }
 
   // update profile
 }
