@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok/features/users/models/user_profile_model.dart';
 
 class UserRepoitory {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  late final FirebaseStorage _storage = FirebaseStorage.instance;
 
   // create profile
   Future<void> createProfile(UserProfileModel profile) async {
@@ -16,7 +20,11 @@ class UserRepoitory {
     return doc.data();
   }
 
-  // update profile
+  // upload/(update) profile
+  Future<void> uploadAvatar(File file, String fileName) async {
+    final fileRef = _storage.ref().child("avatars/$fileName"); // 공간 예약
+    await fileRef.putFile(file); // put
+  }
 }
 
 final userRepo = Provider((ref) => UserRepoitory());
