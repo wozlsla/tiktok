@@ -37,7 +37,7 @@ final messagesProvider = AsyncNotifierProvider<MessagesViewModel, void>(
 );
 
 // Stream을 return해야 함 (realtime conn)
-final chatProvider = StreamProvider<List<MessageModel>>((ref) {
+final chatProvider = StreamProvider.autoDispose<List<MessageModel>>((ref) {
   final db = FirebaseFirestore.instance;
 
   return db

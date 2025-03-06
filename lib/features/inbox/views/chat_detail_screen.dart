@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
+import 'package:tiktok/features/authentication/repos/authentication_repo.dart';
 import 'package:tiktok/features/inbox/view_models/messages_vm.dart';
 
 class ChatDetailScreen extends ConsumerStatefulWidget {
@@ -32,7 +33,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
       appBar: AppBar(
         title: ListTile(
           contentPadding: EdgeInsets.zero,
-          horizontalTitleGap: 8.0,
+          horizontalTitleGap: 10.0,
           leading: const CircleAvatar(
             radius: 24.0,
             foregroundImage: NetworkImage(
@@ -62,47 +63,69 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
             ],
           ),
         ),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(10.0),
+          child: SizedBox.shrink(),
+        ),
       ),
       body: Stack(
         children: [
-          ListView.separated(
-              padding: const EdgeInsets.symmetric(
-                vertical: 20.0,
-                horizontal: 14.0,
-              ),
-              itemBuilder: (context, index) {
-                final isMine = index % 2 == 0; // fake
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment:
-                      isMine ? MainAxisAlignment.end : MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(14.0),
-                      decoration: BoxDecoration(
-                        color: isMine
-                            ? Colors.blue.shade500
-                            : Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20.0),
-                          topRight: Radius.circular(20.0),
-                          bottomLeft: Radius.circular(isMine ? 20.0 : 2.0),
-                          bottomRight: Radius.circular(!isMine ? 20.0 : 2.0),
-                        ),
-                      ),
-                      child: const Text(
-                        "this is a message!",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                        ),
-                      ),
+          ref.watch(chatProvider).when(
+                data: (data) {
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20.0,
+                      horizontal: 14.0,
                     ),
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) => Gaps.v10,
-              itemCount: 10),
+                    itemBuilder: (context, index) {
+                      final message = data[index];
+                      final isMine =
+                          message.uid == ref.watch(authRepo).user!.uid;
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: isMine
+                            ? MainAxisAlignment.end
+                            : MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(14.0),
+                            decoration: BoxDecoration(
+                              color: isMine
+                                  ? Theme.of(context).primaryColor
+                                  : Colors.blue.shade600,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0),
+                                bottomLeft:
+                                    Radius.circular(isMine ? 20.0 : 2.0),
+                                bottomRight:
+                                    Radius.circular(!isMine ? 20.0 : 2.0),
+                              ),
+                            ),
+                            child: Text(
+                              message.text,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    separatorBuilder: (context, index) => Gaps.v10,
+                    itemCount: data.length,
+                  );
+                },
+                error: (error, stackTrace) => Center(
+                  child: Text(
+                    error.toString(),
+                  ),
+                ),
+                loading: () => Center(
+                  child: CircularProgressIndicator.adaptive(),
+                ),
+              ),
           Positioned(
               bottom: 0,
               width: MediaQuery.of(context).size.width,
