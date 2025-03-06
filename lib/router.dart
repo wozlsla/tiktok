@@ -6,6 +6,7 @@ import 'package:tiktok/features/activity/activity_screen.dart';
 import 'package:tiktok/features/authentication/login_screen.dart';
 import 'package:tiktok/features/authentication/repos/authentication_repo.dart';
 import 'package:tiktok/features/authentication/sign_up_screen.dart';
+import 'package:tiktok/features/inbox/views/chats_screen.dart';
 import 'package:tiktok/features/onboarding/interests_screen.dart';
 import 'package:tiktok/features/videos/views/video_recording_screen.dart';
 
@@ -15,7 +16,7 @@ final routerProvider = Provider(
     // final uid = user.value?.uid;
     // final isLoggedIn = uid != null && uid.isNotEmpty;
     return GoRouter(
-      initialLocation: "/home",
+      initialLocation: "/chats",
       redirect: (context, state) {
         final isLoggedIn = ref.read(authRepo).isLoggedIn;
         if (!isLoggedIn) {
@@ -54,6 +55,11 @@ final routerProvider = Provider(
           name: ActivityScreen.routeName,
           path: ActivityScreen.routeURL,
           builder: (context, state) => ActivityScreen(),
+        ),
+        GoRoute(
+          name: ChatsScreen.routeName,
+          path: ChatsScreen.routeURL,
+          builder: (context, state) => ChatsScreen(),
         ),
         GoRoute(
           name: VideoRecordingScreen.routeName,
