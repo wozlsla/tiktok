@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok/features/inbox/views/chat_detail_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
   static const String routeName = "chats";
@@ -45,8 +46,17 @@ class _ChatsScreenState extends State<ChatsScreen> {
     _items.removeAt(index);
   }
 
+  void _onChatTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ChatDetailScreen(),
+      ),
+    );
+  }
+
   Widget _makeTile(int index) {
     return ListTile(
+      onTap: _onChatTap,
       onLongPress: () => _deleteItem(index),
       leading: CircleAvatar(
         radius: 30,
