@@ -4,7 +4,6 @@
 
 https://github.com/user-attachments/assets/dfe2d996-0ad2-46a9-8741-368a8bef9ce5
 
-
 <br/>  
 <br/>
 
@@ -20,7 +19,7 @@ https://github.com/user-attachments/assets/dfe2d996-0ad2-46a9-8741-368a8bef9ce5
   - State Management : Provider & MVVM
 - Firebase
   - Authentication (signup, login, social login)
-  - Database, Storage : uploading video
+  - Database, Storage : upload videos, direct messages(realtime)
   - Filtering (search)
 
 <br/>  

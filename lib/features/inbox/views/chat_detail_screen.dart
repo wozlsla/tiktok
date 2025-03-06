@@ -73,9 +73,12 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
           ref.watch(chatProvider).when(
                 data: (data) {
                   return ListView.separated(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20.0,
-                      horizontal: 14.0,
+                    reverse: true,
+                    padding: EdgeInsets.only(
+                      top: 20.0,
+                      bottom: MediaQuery.of(context).padding.bottom + 96.0,
+                      left: 14.0,
+                      right: 14.0,
                     ),
                     itemBuilder: (context, index) {
                       final message = data[index];

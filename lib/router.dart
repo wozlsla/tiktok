@@ -16,7 +16,7 @@ final routerProvider = Provider(
     // final uid = user.value?.uid;
     // final isLoggedIn = uid != null && uid.isNotEmpty;
     return GoRouter(
-      initialLocation: "/chats",
+      initialLocation: "/home",
       redirect: (context, state) {
         final isLoggedIn = ref.read(authRepo).isLoggedIn;
         if (!isLoggedIn) {
