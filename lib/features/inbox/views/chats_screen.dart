@@ -15,6 +15,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   final GlobalKey<AnimatedListState> _key = GlobalKey<AnimatedListState>();
 
   final List<int> _items = [];
+  final Duration _duration = Duration(milliseconds: 300);
 
   void _addItem() {
     // AanimatedList에 접근
@@ -23,12 +24,24 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
       _key.currentState!.insertItem(
         _items.length,
-        duration: Duration(
-          milliseconds: 300,
-        ),
+        duration: _duration,
       ); // add end
       _items.add(_items.length);
     }
+  }
+
+  void _deleteItem(int index) {
+    _key.currentState!.removeItem(
+      index,
+      (context, animation) => SizeTransition(
+        sizeFactor: animation,
+        child: ListTile(
+          title: Text("test"),
+        ),
+      ),
+      duration: _duration,
+    );
+    _items.removeAt(index);
   }
 
   @override
@@ -56,6 +69,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
             child: SizeTransition(
               sizeFactor: animation,
               child: ListTile(
+                onLongPress: () => _deleteItem(index),
                 leading: CircleAvatar(
                   radius: 30,
                   foregroundImage: NetworkImage(
