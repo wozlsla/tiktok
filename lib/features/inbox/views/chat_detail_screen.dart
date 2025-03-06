@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
+import 'package:tiktok/features/inbox/view_models/messages_vm.dart';
 
-class ChatDetailScreen extends StatefulWidget {
+class ChatDetailScreen extends ConsumerStatefulWidget {
   const ChatDetailScreen({super.key});
 
   @override
-  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
+  ConsumerState<ChatDetailScreen> createState() => _ChatDetailScreenState();
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
+  final TextEditingController _controller = TextEditingController();
+
+  void _onSendPresse() {
+    final text = _controller.text;
+    if (text == "") {
+      return;
+    }
+    ref.read(messagesProvider.notifier).sendMessage(text);
+    _controller.text = ""; // 보낸 후 초기화
+  }
+
   @override
   Widget build(BuildContext context) {
+    // 보내는 중(loading)에는 send 막음
+    final isLoading = ref.watch(messagesProvider).isLoading;
+
     return Scaffold(
       appBar: AppBar(
         title: ListTile(
@@ -95,6 +111,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        controller: _controller,
                         autocorrect: false,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -106,10 +123,13 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                       ),
                     ),
                     Gaps.v20,
-                    Container(
+                    IconButton(
+                      onPressed: isLoading ? null : _onSendPresse,
                       padding: EdgeInsets.only(left: 10.0),
-                      child: FaIcon(
-                        FontAwesomeIcons.paperPlane,
+                      icon: FaIcon(
+                        isLoading
+                            ? FontAwesomeIcons.hourglass
+                            : FontAwesomeIcons.paperPlane,
                       ),
                     )
                   ],
