@@ -56,15 +56,13 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           ),
           bottom: TabBar(
             splashFactory: NoSplash.splashFactory,
-            padding: const EdgeInsets.symmetric(
-              horizontal: Sizes.size16,
-            ),
+            padding: EdgeInsets.zero,
+            tabAlignment: TabAlignment.start,
             isScrollable: true,
             labelStyle: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: Sizes.size16,
             ),
-            // indicatorColor: Theme.of(context).indicatorColor,
             tabs: [
               for (var tab in tabs)
                 Tab(
