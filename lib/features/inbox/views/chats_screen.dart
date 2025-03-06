@@ -35,13 +35,44 @@ class _ChatsScreenState extends State<ChatsScreen> {
       index,
       (context, animation) => SizeTransition(
         sizeFactor: animation,
-        child: ListTile(
-          title: Text("test"),
+        child: Container(
+          color: Theme.of(context).primaryColor,
+          child: _makeTile(index),
         ),
       ),
       duration: _duration,
     );
     _items.removeAt(index);
+  }
+
+  Widget _makeTile(int index) {
+    return ListTile(
+      onLongPress: () => _deleteItem(index),
+      leading: CircleAvatar(
+        radius: 30,
+        foregroundImage: NetworkImage(
+          "https://github.com/user-attachments/assets/9eefce11-9d03-4bcc-8a6a-ffd8f154e727",
+        ),
+        child: Text("Jim"),
+      ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "wozl ($index)",
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+          Text(
+            "20:30",
+            style: TextStyle(
+              color: Colors.grey.shade500,
+              fontSize: 12.0,
+            ),
+          ),
+        ],
+      ),
+      subtitle: Text("Do Somethig!!"),
+    );
   }
 
   @override
@@ -68,33 +99,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
             opacity: animation,
             child: SizeTransition(
               sizeFactor: animation,
-              child: ListTile(
-                onLongPress: () => _deleteItem(index),
-                leading: CircleAvatar(
-                  radius: 30,
-                  foregroundImage: NetworkImage(
-                    "https://github.com/user-attachments/assets/9eefce11-9d03-4bcc-8a6a-ffd8f154e727",
-                  ),
-                  child: Text("Jim"),
-                ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "wozl ($index)",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      "20:30",
-                      style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: 12.0,
-                      ),
-                    ),
-                  ],
-                ),
-                subtitle: Text("Do Somethig!!"),
-              ),
+              child: _makeTile(index),
             ),
           );
         },
