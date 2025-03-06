@@ -37,12 +37,26 @@ export const onVideoCreated = onDocumentCreated(
 
       // Firebase Storage에 업로드
       const storage = getStorage().bucket();
-      await storage.upload(tempPath, {
+      const [file, _] = await storage.upload(tempPath, {
         destination: `thumbnails/${snapshot.id}.jpg`,
         metadata: {
           contentType: "image/jpg",
         },
       });
+      await file.makePublic();
+      await snapshot.ref.update({ thumbnameUrl: file.publicUrl() });
+
+      const db = admin.firestore();
+
+      await db
+        .collection("users")
+        .doc(video.creatorUid)
+        .collection("videos")
+        .doc(snapshot.id)
+        .set({
+          thumbnailUrl: file.publicUrl(),
+          videoId: snapshot.id,
+        });
     } catch (error) {
       console.error("Error processing video:", error);
     }

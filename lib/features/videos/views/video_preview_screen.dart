@@ -28,12 +28,12 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
   bool _saveVideo = false;
 
   Future<void> _initVideo() async {
-    // _videoPlayerController = VideoPlayerController.file(
-    //   File(widget.video.path),
-    // );
-    _videoPlayerController =
-        // VideoPlayerController.asset("assets/videos/life.mp4"); // test
-        VideoPlayerController.asset("assets/videos/pooku_attack.mp4"); // test
+    _videoPlayerController = VideoPlayerController.file(
+      File(widget.video.path),
+    );
+    // _videoPlayerController =
+    //     VideoPlayerController.asset("assets/videos/life.mp4"); // test
+    // VideoPlayerController.asset("assets/videos/pooku_attack.mp4"); // test
 
     await _videoPlayerController.initialize(); // simulator format errors
     await _videoPlayerController.setLooping(true);
