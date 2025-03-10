@@ -31,81 +31,116 @@ class SignUpScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Sizes.size40,
-          ),
-          child: Column(
-            children: [
-              Gaps.v80,
-              Text(
-                "Sign up for TikTok",
-                style: TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
-                ),
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return Scaffold(
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Sizes.size40,
               ),
-              Gaps.v20,
-              Opacity(
-                opacity: 0.7,
-                child: Text(
-                  "Create a profile, follow other accounts, make your own videos, and more.",
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
+              child: Column(
+                children: [
+                  Gaps.v80,
+                  Text(
+                    "Sign up for TikTok",
+                    style: TextStyle(
+                      fontSize: Sizes.size24,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Gaps.v40,
-              GestureDetector(
-                onTap: () => _onEmailTap(context),
-                child: AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.user),
-                  text: "Use email & password",
-                ),
-              ),
-              Gaps.v16,
-              GestureDetector(
-                onTap: () =>
-                    ref.read(socialAuthProvider.notifier).githubSignIn(context),
-                child: AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.github),
-                  text: "Continue with Github",
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        height: 94,
-        color: isDarkMode(context) ? Colors.grey.shade900 : Colors.grey.shade50,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            bottom: Sizes.size28,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Already have an account?"),
-              Gaps.h5,
-              GestureDetector(
-                onTap: () => _onLoginTap(context),
-                child: Text(
-                  "Log in",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).primaryColor,
-                    // color: Theme.of(context).colorScheme.primary,
+                  Gaps.v20,
+                  Opacity(
+                    opacity: 0.7,
+                    child: Text(
+                      "Create a profile, follow other accounts, make your own videos, and more.",
+                      style: TextStyle(
+                        fontSize: Sizes.size16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
+                  Gaps.v40,
+                  if (orientation == Orientation.portrait) ...[
+                    GestureDetector(
+                      onTap: () => _onEmailTap(context),
+                      child: AuthButton(
+                        icon: FaIcon(FontAwesomeIcons.user),
+                        text: "Use email & password",
+                      ),
+                    ),
+                    Gaps.v16,
+                    GestureDetector(
+                      onTap: () => ref
+                          .read(socialAuthProvider.notifier)
+                          .githubSignIn(context),
+                      child: AuthButton(
+                        icon: FaIcon(FontAwesomeIcons.github),
+                        text: "Continue with Github",
+                      ),
+                    ),
+                  ],
+                  if (orientation == Orientation.landscape)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => _onEmailTap(context),
+                            child: AuthButton(
+                              icon: FaIcon(FontAwesomeIcons.user),
+                              text: "Use email & password",
+                            ),
+                          ),
+                        ),
+                        Gaps.h16,
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => ref
+                                .read(socialAuthProvider.notifier)
+                                .githubSignIn(context),
+                            child: AuthButton(
+                              icon: FaIcon(FontAwesomeIcons.github),
+                              text: "Continue with Github",
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+          bottomNavigationBar: Container(
+            height: 94,
+            color: isDarkMode(context)
+                ? Colors.grey.shade900
+                : Colors.grey.shade50,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                bottom: Sizes.size28,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Already have an account?"),
+                  Gaps.h5,
+                  GestureDetector(
+                    onTap: () => _onLoginTap(context),
+                    child: Text(
+                      "Log in",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).primaryColor,
+                        // color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
